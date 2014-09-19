@@ -24,6 +24,11 @@ type RateLimit struct {
 	T0    time.Time
 }
 
+// NewRateLimit creates a new rate limit tracker
+func NewRateLimit(limit int, deltat time.Duration) *RateLimit {
+	return &RateLimit{Rate{NewCounter(0), deltat}, limit, time.Now()}
+}
+
 // Exceeded return if the rate limit is exceeded
 func (r RateLimit) Exceeded() bool {
 	return r.R.HitsPerDuration(time.Since(r.T0)) > float64(r.Limit)
