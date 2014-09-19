@@ -9,7 +9,7 @@ import (
 func (s *MySuite) TestRatePerDuration(c *C) {
 	r := Rate{NewCounter(100), time.Second}
 	c.Assert(r.HitsPerDuration(0*time.Second), Equals, float64(100))
-	c.Assert(r.HitsPerDuration(500*time.Millisecond), Equals, float64(200))
+	c.Assert(r.HitsPerDuration(500*time.Millisecond), Equals, float64(100))
 	c.Assert(r.HitsPerDuration(2*time.Second), Equals, float64(50))
 	c.Assert(r.HitsPerDuration(3*time.Second), Equals, float64(100)/3)
 }
@@ -34,7 +34,7 @@ func (s *MySuite) TestRateLimitHit(c *C) {
 }
 
 func (s *MySuite) TestRateTracking(c *C) {
-	t := time.Now().Add(-1 * time.Minute)
+	t := time.Now()
 	ra := RateLimit{Rate{NewCounter(0), time.Minute}, 5, t}
 	c.Assert(ra.timeHit(t), Equals, false)
 	c.Assert(ra.timeHit(t.Add(10*time.Second)), Equals, false)

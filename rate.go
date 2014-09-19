@@ -10,6 +10,9 @@ type Rate struct {
 
 // HitsPerDuration return the rate of hits in the duration d
 func (r Rate) HitsPerDuration(d time.Duration) float64 {
+	if d < r.DeltaT {
+		d = r.DeltaT
+	}
 	f := (float64(d) / float64(r.DeltaT))
 	if f == 0 {
 		return float64(r.Hits.Value())
