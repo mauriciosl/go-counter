@@ -1,4 +1,4 @@
 go-counter
 ==========
 
-A distributed counter
+A generic counter
