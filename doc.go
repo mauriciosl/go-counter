@@ -34,7 +34,7 @@
 		}
 		// normal code
 
-	You will achieve grater precision with greater time deltas, so use
+	You will achieve greater precision with greater time deltas, so use
 	60 / Minute instead of 1 / Second
 
 		// Worse
