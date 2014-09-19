@@ -2,11 +2,6 @@ package counter
 
 import "sync"
 
-// Syncer interface to objects capable of synchronizing counters
-type Syncer interface {
-	Sync(int) int
-}
-
 // Interface to counter objects
 type Interface interface {
 	Add(int) int
