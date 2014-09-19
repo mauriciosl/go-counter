@@ -8,7 +8,7 @@ import (
 )
 
 func (s *MySuite) TestCounterAdd(c *C) {
-	x := NewCounter()
+	x := NewCounter(0)
 	x.Add(1)
 	c.Assert(x.Value(), Equals, 1)
 	x.Add(3)
@@ -17,7 +17,7 @@ func (s *MySuite) TestCounterAdd(c *C) {
 
 func (s *MySuite) TestSharedCounterAdd(c *C) {
 	runtime.GOMAXPROCS(runtime.NumCPU())
-	x := NewCounter()
+	x := NewCounter(0)
 	w := &sync.WaitGroup{}
 	w.Add(100)
 	for i := 0; i < 100; i++ {
@@ -31,7 +31,7 @@ func (s *MySuite) TestSharedCounterAdd(c *C) {
 }
 
 func (s *MySuite) TestDeltaCounter(c *C) {
-	x := NewDeltaCounter()
+	x := NewDeltaCounter(0)
 	x.Add(2)
 	c.Assert(x.Value(), Equals, 2)
 	c.Assert(x.Delta(), Equals, 2)
@@ -47,7 +47,7 @@ func (s *MySuite) TestDeltaCounter(c *C) {
 }
 
 func (s *MySuite) TestObservableCounter(c *C) {
-	c1 := NewObservableCounter(NewCounter())
+	c1 := NewObservableCounter(NewCounter(0))
 	select {
 	case <-c1.C:
 		c.Fatal("Channel should start empty")

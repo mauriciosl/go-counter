@@ -4,7 +4,7 @@ import "time"
 
 // Rate keeps track of hits
 type Rate struct {
-	Hits   int
+	Hits   Interface
 	DeltaT time.Duration
 }
 
@@ -12,9 +12,9 @@ type Rate struct {
 func (r Rate) HitsPerDuration(d time.Duration) float64 {
 	f := (float64(d) / float64(r.DeltaT))
 	if f == 0 {
-		return float64(r.Hits)
+		return float64(r.Hits.Value())
 	}
-	return float64(r.Hits) / f
+	return float64(r.Hits.Value()) / f
 }
 
 // RateLimit tracks the rate of hits in time
@@ -35,10 +35,10 @@ func (r *RateLimit) Hit() bool {
 }
 
 func (r *RateLimit) timeHit(t time.Time) bool {
-	r.R.Hits++
+	r.R.Hits.Add(1)
 	delta := t.Sub(r.T0)
 	if delta > r.R.DeltaT {
-		r.R.Hits = 1
+		r.R.Hits.Set(1)
 		r.T0 = t
 	}
 	return r.Exceeded()

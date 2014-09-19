@@ -22,8 +22,8 @@ type Counter struct {
 }
 
 // NewCounter creates a new counter with 0 value
-func NewCounter() *Counter {
-	return &Counter{}
+func NewCounter(v int) *Counter {
+	return &Counter{v: v}
 }
 
 // Add increments the counter by delta
@@ -62,8 +62,8 @@ type DeltaCounter struct {
 }
 
 // NewDeltaCounter creates a new counter that keeps track of the delta
-func NewDeltaCounter() *DeltaCounter {
-	return &DeltaCounter{&Counter{}, &Counter{}}
+func NewDeltaCounter(v int) *DeltaCounter {
+	return &DeltaCounter{&Counter{v: v}, &Counter{}}
 }
 
 // Add increment the counter by a delta
