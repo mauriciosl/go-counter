@@ -28,7 +28,7 @@ func (s *MySuite) TestRateLimitHit(c *C) {
 	t := time.Now().Add(-2 * time.Second)
 	ra := RateLimit{Rate{NewCounter(0), time.Second}, 100, t}
 	t = time.Now()
-	ra.timeHit(t)
+	ra.TimeHit(t)
 	c.Assert(ra.R.Hits.Value(), Equals, 1)
 	c.Assert(ra.T0, Equals, t)
 }
@@ -36,11 +36,11 @@ func (s *MySuite) TestRateLimitHit(c *C) {
 func (s *MySuite) TestRateTracking(c *C) {
 	t := time.Now()
 	ra := RateLimit{Rate{NewCounter(0), time.Minute}, 5, t}
-	c.Assert(ra.timeHit(t), Equals, false)
-	c.Assert(ra.timeHit(t.Add(10*time.Second)), Equals, false)
-	c.Assert(ra.timeHit(t.Add(20*time.Second)), Equals, false)
-	c.Assert(ra.timeHit(t.Add(30*time.Second)), Equals, false)
-	c.Assert(ra.timeHit(t.Add(40*time.Second)), Equals, false)
-	c.Assert(ra.timeHit(t.Add(50*time.Second)), Equals, true)
-	c.Assert(ra.timeHit(t.Add(70*time.Second)), Equals, false)
+	c.Assert(ra.TimeHit(t), Equals, false)
+	c.Assert(ra.TimeHit(t.Add(10*time.Second)), Equals, false)
+	c.Assert(ra.TimeHit(t.Add(20*time.Second)), Equals, false)
+	c.Assert(ra.TimeHit(t.Add(30*time.Second)), Equals, false)
+	c.Assert(ra.TimeHit(t.Add(40*time.Second)), Equals, false)
+	c.Assert(ra.TimeHit(t.Add(50*time.Second)), Equals, true)
+	c.Assert(ra.TimeHit(t.Add(70*time.Second)), Equals, false)
 }

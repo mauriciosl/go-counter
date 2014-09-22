@@ -39,10 +39,11 @@ func (r RateLimit) Exceeded() bool {
 
 // Hit increments the hit count and return if the rate is exceeded
 func (r *RateLimit) Hit() bool {
-	return r.timeHit(time.Now())
+	return r.TimeHit(time.Now())
 }
 
-func (r *RateLimit) timeHit(t time.Time) bool {
+// TimeHit increments the hit count at a given time
+func (r *RateLimit) TimeHit(t time.Time) bool {
 	r.R.Hits.Add(1)
 	delta := t.Sub(r.T0)
 	if delta > r.R.DeltaT {
